@@ -8,9 +8,13 @@
 
       <!-- Cart component -->
       <div class="Cart">
-        <p>Cart (0)</p>
+        <p>Cart: {{this.cart.length}} items</p>
         <!-- Button component -->
-        <Shop-Button><p>Empty Cart</p></Shop-Button>
+        <Shop-Button-Empty-Cart
+            @empty-cart="emptyCart">
+          <p>Empty Cart</p>
+        </Shop-Button-Empty-Cart>
+        <p>Total: ${{this.total}}</p>
       </div>
     </section>
 
@@ -20,6 +24,7 @@
       <!-- Item component -->
       <shop-item v-for="item in this.items"
                  :item="item"
+                 @update-cart="updateCart"
       >
       </shop-item>
     </section>
@@ -31,6 +36,7 @@
 <script>
 import ShopItem from './components/Shop-Item.vue'
 import ShopButton from './components/Shop-Button.vue'
+import ShopButtonEmptyCart from './components/Shop-Button-Empty-Cart.vue'
 
 
 
@@ -40,7 +46,7 @@ import Apple from './assets/apple.jpg';
 export default {
     name: 'app',
     components: {
-      ShopItem, ShopButton
+      ShopItem, ShopButton, ShopButtonEmptyCart
     },
     data() {
         return {
@@ -48,25 +54,43 @@ export default {
                 {
                     id: 205,
                     name: 'Banana',
-                    price: 50,
+                    price: 1,
                     imageSrc: Banana
                 },
                 {
                     id: 148,
                     name: 'Orange',
-                    price: 60,
+                    price: 2,
                     imageSrc: Orange
                 },
                 {
                     id: 248,
                     name: 'Apple',
-                    price: 40,
+                    price: 1,
                     imageSrc: Apple
                 }
             ],
-            cart: []
+            cart: [],
+            total: 0
         }
-    }
+    },
+    computed: {
+        shoppingCartTotal() {
+            return this.total = this.cart.map(item => item.price).reduce((total, amount) => total + amount);
+        }
+    },
+    methods: {
+        updateCart(e) {
+            this.cart.push(e);
+            this.shoppingCartTotal;
+        },
+
+        emptyCart() {
+            this.cart = [];
+            this.total = 0;
+        }
+    },
+
 }
 </script>
 
@@ -111,6 +135,8 @@ h1 {
   height: fit-content;
   background-color: white;
   text-align: center;
+  font-size: 0.9em;
+  padding: 5px;
 }
 
 .Button {

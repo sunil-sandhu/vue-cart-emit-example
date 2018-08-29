@@ -3,13 +3,14 @@
         <img :src="item.imageSrc" :alt="item.name" class="ItemImage">
         <div class="ItemDetails">
             <p>Product: <strong>{{item.name}}</strong></p>
-            <p>Price: <strong>$0.{{item.price}}</strong></p>
+            <p>Price: <strong>${{item.price}}</strong></p>
         </div>
         <!-- Button component -->
         <Shop-Button
-                @button-clicked="addToCart"
-                :item="item"
-        ><p>Add To Cart</p></Shop-Button>
+                @button-clicked="addToCart(item)"
+                :item="item">
+            <p>Add To Cart</p>
+        </Shop-Button>
     </div>
 </template>
 
@@ -26,7 +27,7 @@ import ShopButton from './Shop-Button.vue'
 
         methods: {
             addToCart(item) {
-                console.log(item)
+                this.$emit('update-cart', item)
             }
         }
     }
