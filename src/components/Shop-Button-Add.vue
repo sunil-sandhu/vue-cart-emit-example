@@ -1,20 +1,21 @@
 <template>
     <button class="Button" @click="buttonClicked">
-        <slot></slot>
+    <slot></slot>
     </button>
 </template>
 
 <script>
 
     export default {
-        name: 'Shop-Button-Empty-Cart',
+        name: 'Shop-Button-Add',
         components: {},
+        props: ['item'],
         data() {
             return {}
         },
         methods: {
             buttonClicked() {
-                this.$emit('empty-cart')
+                this.$emit('button-clicked')
             }
         }
     }

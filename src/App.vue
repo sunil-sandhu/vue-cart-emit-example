@@ -2,41 +2,40 @@
   <div id="app">
 
 
-    <!-- Header component -->
+
     <section class="Header">
+
       <h1>Fruiticious!</h1>
 
       <!-- Cart component -->
-      <div class="Cart">
-        <p>Cart: {{this.cart.length}} items</p>
-        <!-- Button component -->
-        <Shop-Button-Empty-Cart
-            @empty-cart="emptyCart">
-          <p>Empty Cart</p>
-        </Shop-Button-Empty-Cart>
-        <p>Total: ${{this.total}}</p>
-      </div>
+      <shop-cart
+          :cart="this.cart"
+          :total="this.total"
+          @empty-cart="emptyCart">
+
+      </shop-cart>
+
     </section>
 
 
-    <!-- Shop component -->
-    <section class="Shop">
+
       <!-- Item component -->
       <shop-item v-for="item in this.items"
                  :item="item"
+                 :key="item.id"
                  @update-cart="updateCart"
       >
       </shop-item>
-    </section>
 
 
   </div>
 </template>
 
 <script>
+import ShopCart from './components/Shop-Cart.vue'
 import ShopItem from './components/Shop-Item.vue'
-import ShopButton from './components/Shop-Button.vue'
-import ShopButtonEmptyCart from './components/Shop-Button-Empty-Cart.vue'
+import ShopButton from './components/Shop-Button-Add.vue'
+import ShopButtonEmpty from './components/Shop-Button-Empty.vue'
 
 
 
@@ -46,7 +45,7 @@ import Apple from './assets/apple.jpg';
 export default {
     name: 'app',
     components: {
-      ShopItem, ShopButton, ShopButtonEmptyCart
+      ShopCart, ShopItem, ShopButton, ShopButtonEmpty
     },
     data() {
         return {
@@ -76,13 +75,13 @@ export default {
     },
     computed: {
         shoppingCartTotal() {
-            return this.total = this.cart.map(item => item.price).reduce((total, amount) => total + amount);
+            return this.cart.map(item => item.price).reduce((total, amount) => total + amount);
         }
     },
     methods: {
         updateCart(e) {
             this.cart.push(e);
-            this.shoppingCartTotal;
+            this.total = this.shoppingCartTotal;
         },
 
         emptyCart() {
@@ -94,7 +93,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 
 
 body {
@@ -102,7 +101,7 @@ body {
   padding: 0;
   min-height: 100vh;
   max-width: 800px;
-  background: linear-gradient(#ffd781, #ffc3c3);
+  background: linear-gradient(#fcac00, #b60000);
   font-family: arial, sans-serif;
 }
 
@@ -126,7 +125,9 @@ h1 {
   width: auto;
   display: flex;
   /*border: 1px solid;*/
-  background-color: red;
+  background: linear-gradient(#ae0220, red);
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }
 
 .Cart {
@@ -141,38 +142,41 @@ h1 {
 
 .Button {
   /*border: 1px solid;*/
-  width: 100px;
-  height: 50px;
+  width: 120px;
+  height: 60px;
   border-radius: 5px;
   background: radial-gradient(#6bf88e, #5ce561);
   color: white;
   font-size: 14px;
   cursor: pointer;
+  p {
+    color: #3c3c3c;
+    font-weight: bold;
+  }
 }
 
-.Shop {
-  /*border: 1px solid;*/
-}
 
 .Item {
   /*border: 1px solid;*/
   display: flex;
-  justify-content: space-between;
+  /*justify-content: space-between;*/
   align-items: center;
   padding: 10px;
   background-color: white;
-  border-bottom: 1px solid;
+  border-bottom: 1px dotted;
 }
 
 .ItemDetails {
+  flex-grow: 0.9;
+  padding-left: 20px;
 }
 
 
 .ItemImage {
   width: 150px;
   height: 150px;
-  border: 1px dotted;
-  border-radius: 5px;
+  /*border: 1px dotted;*/
+  /*border-radius: 5px;*/
 }
 
 
@@ -181,6 +185,11 @@ h1 {
 
   body {
     margin: 0 auto;
+  }
+
+  .Header {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
   }
 
   .ItemImage {

@@ -1,25 +1,28 @@
 <template>
     <div class="Item">
+
         <img :src="item.imageSrc" :alt="item.name" class="ItemImage">
         <div class="ItemDetails">
-            <p>Product: <strong>{{item.name}}</strong></p>
+            <p><strong>{{item.name}}</strong></p>
             <p>Price: <strong>${{item.price}}</strong></p>
         </div>
+
         <!-- Button component -->
-        <Shop-Button
+        <Shop-Button-Add
                 @button-clicked="addToCart(item)"
                 :item="item">
             <p>Add To Cart</p>
-        </Shop-Button>
+        </Shop-Button-Add>
+
     </div>
 </template>
 
 <script>
-import ShopButton from './Shop-Button.vue'
+import ShopButtonAdd from './Shop-Button-Add.vue'
 
     export default {
         name: 'Shop-Item',
-        components: { ShopButton },
+        components: { ShopButtonAdd },
         props: ['item'],
         data() {
             return {}
