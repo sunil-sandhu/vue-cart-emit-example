@@ -34,9 +34,6 @@
 <script>
 import ShopCart from './components/Shop-Cart.vue'
 import ShopItem from './components/Shop-Item.vue'
-import ShopButton from './components/Shop-Button-Add.vue'
-import ShopButtonEmpty from './components/Shop-Button-Empty.vue'
-
 
 
 import Banana from './assets/banana.jpg';
@@ -45,7 +42,7 @@ import Apple from './assets/apple.jpg';
 export default {
     name: 'app',
     components: {
-      ShopCart, ShopItem, ShopButton, ShopButtonEmpty
+      ShopCart, ShopItem
     },
     data() {
         return {
